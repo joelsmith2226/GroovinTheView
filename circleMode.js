@@ -1,3 +1,6 @@
+var midRingRadius;
+var highRingRadius;
+
 function drawCircle(spectrum){
    noStroke();
    for (var i = 0; i < spectrum.length; i++) {

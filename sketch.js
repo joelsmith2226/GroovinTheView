@@ -4,33 +4,38 @@
 // GLOBALS
 var fft;
 var button;
-var shapeButton;
+var modeSelector;
 var nextSong;
-var modes;
+var songs;
 var mode;
 var w;
-var songs;
-var trackNum;
 var rotation;
-var magnify;
-var magDir;
-var midRingRadius;
-var highRingRadius;
 var bands;
 var stars;
+var frequencySlider;
 
 // FUNCTIONS
 function toggleSong() {
    if (song.isPlaying()){
       song.pause();
    } else {
-      song.play()
+      song.play();
    }
 }
 
-function toggleMode() {
-   currMode = modes.indexOf(mode);
-   mode = modes[(currMode + 1) % modes.length];
+function changeMode() {
+   mode = modeSelector.value();
+   if (mode == "Wave"){
+      frequencySlider = createSlider(0, 10, 100);
+      frequencySlider.position(10, 130);
+      frequencySlider.style('width', '80px');
+      ampSlider = createSlider(-50, 10, 100);
+      ampSlider.position(10, 180);
+      ampSlider.style('width', '80px');
+   } else if (frequencySlider){
+      frequencySlider.remove();
+      ampSlider.remove();
+   }
 }
 
 function preload() {
@@ -38,29 +43,26 @@ function preload() {
    song2 = loadSound('lucid-dreams.mp3');
    song3 = loadSound('seven-nation-army.mp3');
    song4 = loadSound('SynthSaga.mp3');
-   songs = [song1, song2, song3, song4]
+   songs = {"Can you feel it":song1, "Lucid dreams":song2,
+            "Seven nation army":song3, "SynthSaga":song4};
 }
 
 function changeSong() {
-   trackNum += 1
-   if (trackNum >= songs.length){
-      trackNum = 0;
-   }
    song.pause();
-   song = songs[trackNum];
+   console.log(nextSong.value());
+   song = songs[nextSong.value()];
    song.play();
 }
 
 function setup() {
-   createCanvas(windowWidth, windowHeight-40);
+   createCanvas(displayWidth, displayHeight);
    angleMode(DEGREES);
    setupButtons();
 
    // Instantiate globals
    trackNum = 0;
-   song = songs[trackNum];
-   modes = ['flat', 'circle', 'notes']
-   mode = 'flat';
+   song = songs["Can you feel it"];
+   mode = 'Spectrum';
 
    // Spectrum variables
    bands = 128;
@@ -80,30 +82,46 @@ function setup() {
 }
 
 function setupButtons(){
-   button = createButton('On/Off')
+   button = createButton('Play/Pause')
    button.mousePressed(toggleSong);
-   shapeButton = createButton('Change Modes');
-   shapeButton.mousePressed(toggleMode);
+   modeSelector = createSelect('Change Modes');
+   modeSelector.option('Spectrum');
+   modeSelector.option('Circular');
+   modeSelector.option('Wave');
+   modeSelector.changed(changeMode);
    button.mousePressed(toggleSong);
-   nextSong = createButton("Next Song")
-   nextSong.mousePressed(changeSong);
-   button.position(width/2 - button.width, height);
-   shapeButton.position(width/2, height);
-   nextSong.position(width - nextSong.width, height);
-}
+   nextSong = createSelect("Next Song");
+   nextSong.option('Can you feel it');
+   nextSong.option('Lucid dreams');
+   nextSong.option('Seven nation army');
+   nextSong.option('SynthSaga');
+   nextSong.changed(changeSong);
+   button.position(10, 10);
+   modeSelector.position(10, 50);
+   nextSong.position(10, 90);
 
+
+
+}
 
 function draw() {
    background(0);
    var spectrum = fft.analyze();
    noStroke(0);
-   if (mode == 'circle'){
+
+   if (mode == 'Circular'){
       translate(width/2, height/2);
       drawCircle(spectrum);
       translate(-width/2, -height/2);
-   } else if(mode == 'flat') {
+   } else if(mode == 'Spectrum') {
       drawFlat(spectrum);
-   } else if (mode == 'notes'){
+   } else if (mode == 'Wave'){
+      textSize(12);
+      fill(255);
+      text('Wave Frequency', 10, 170);
+      textSize(12);
+      fill(255);
+      text('Wave Amplitude', 10, 220);
       drawNotes(spectrum);
    }
    drawStars()

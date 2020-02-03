@@ -1,3 +1,4 @@
+
 function drawFlat(spectrum){
    colorMode(HSB, bands);
    var maxF = Math.max(spectrum);
