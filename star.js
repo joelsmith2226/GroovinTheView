@@ -7,8 +7,8 @@ class Star{
       this.pz = this.z;
 
    }
-   update(speed) {
-      this.z -= speed;
+   update() {
+      this.z -= 300/tempo;
       if (this.z < 1) {
          this.x = random(-width/1.5, width/1.5);
          this.y = random(-height/1.5, height/1.5);
@@ -35,7 +35,7 @@ class Star{
 function  drawStars() {
   translate(width / 2, height / 2);
   for (var i = 0; i < stars.length; i++) {
-    stars[i].update(10);
+    stars[i].update();
     stars[i].show();
   }
 }

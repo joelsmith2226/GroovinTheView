@@ -1,18 +1,24 @@
 // Joel Smith
 // Music Visualizer
 
+/* TODO: - sort out different device displays such as mobile
+         - Star speed in response to Music [x]
+         - Beat detection
+         - Pitch detection
+         - Fix amp modulation
+         - Make circular more interesting
+         - Investigate particle effects
+         - Integrate this repo with portfolio website
+         - rotation speed response to tempo
+*/
 // GLOBALS
-var fft;
-var button;
-var modeSelector;
-var nextSong;
-var songs;
-var mode;
-var w;
-var rotation;
-var bands;
-var stars;
-var frequencySlider;
+var fft, peakDetect, bands;
+var button, modeSelector, nextSong, frequencySlider, ampSlider;
+var songs, mode, tempo, peakTimer, peakHistory;
+var w, rotation, stars;
+
+// temp GLOBALS
+var eW = 50;
 
 // FUNCTIONS
 function toggleSong() {
@@ -20,6 +26,9 @@ function toggleSong() {
       song.pause();
    } else {
       song.play();
+      peakTimer = 0;
+      tempo = 200;
+      peakHistory = [];
    }
 }
 
@@ -49,9 +58,12 @@ function preload() {
 
 function changeSong() {
    song.pause();
-   console.log(nextSong.value());
    song = songs[nextSong.value()];
    song.play();
+   peakDetect = new p5.PeakDetect();
+   peakTimer = 0;
+   tempo = 200;
+   peakHistory = [200];
 }
 
 function setup() {
@@ -67,6 +79,7 @@ function setup() {
    // Spectrum variables
    bands = 128;
    fft = new p5.FFT(0.78, bands);
+
    w = width / (bands * 1.5);
 
    // Transformation variables
@@ -79,6 +92,12 @@ function setup() {
    for (var i = 0; i < 400; i++){
       stars[i] = new Star(windowHeight, windowWidth);
    }
+
+   // Tempo detection
+   peakDetect = new p5.PeakDetect();
+   peakTimer = 0;
+   peakHistory = [];
+   tempo = 100;
 }
 
 function setupButtons(){
@@ -99,14 +118,26 @@ function setupButtons(){
    button.position(10, 10);
    modeSelector.position(10, 50);
    nextSong.position(10, 90);
-
-
-
 }
 
 function draw() {
    background(0);
    var spectrum = fft.analyze();
+   peakDetect.update(fft);
+   if (peakDetect.isDetected) {
+      if (peakTimer < 300 && peakTimer > 10){
+         updatePeakHistory();
+      }
+      eW = 50;
+      peakTimer = 0;
+   } else {
+      peakTimer += 1;
+      eW *= 0.95;
+   }
+   textSize(12);
+   fill(255);
+   text(peakTimer, 200, 10);
+   ellipse(200, 40, eW, eW);
    noStroke(0);
 
    if (mode == 'Circular'){
@@ -125,4 +156,13 @@ function draw() {
       drawNotes(spectrum);
    }
    drawStars()
+}
+
+function updatePeakHistory(){
+   peakHistory.push(peakTimer);
+   if (peakHistory.length > 5){
+      peakHistory.shift();
+   }
+   tempo = peakHistory.reduce((a, b) => a + b, 0)/peakHistory.length;
+   console.log(peakHistory);
 }
