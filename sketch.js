@@ -48,10 +48,10 @@ function changeMode() {
 }
 
 function preload() {
-   song1 = loadSound('can-you-feel-it.mp3');
-   song2 = loadSound('lucid-dreams.mp3');
-   song3 = loadSound('seven-nation-army.mp3');
-   song4 = loadSound('SynthSaga.mp3');
+   song1 = loadSound('songs/can-you-feel-it.mp3');
+   song2 = loadSound('songs/lucid-dreams.mp3');
+   song3 = loadSound('songs/seven-nation-army.mp3');
+   song4 = loadSound('songs/SynthSaga.mp3');
    songs = {"Can you feel it":song1, "Lucid dreams":song2,
             "Seven nation army":song3, "SynthSaga":song4};
 }
