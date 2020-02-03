@@ -1,5 +1,5 @@
 // Joel Smith
-// Music Visualizer
+// GroovinTheView
 
 /* TODO: - sort out different device displays such as mobile
          - Star speed in response to Music [x]
@@ -98,6 +98,11 @@ function setup() {
    peakTimer = 0;
    peakHistory = [];
    tempo = 100;
+
+   //Portfolio link
+   let link = createA("https://joelsmith2226.github.io", "Back to portfolio");
+   link.position(displayWidth-link.width*2,10);
+
 }
 
 function setupButtons(){
