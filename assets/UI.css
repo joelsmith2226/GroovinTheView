@@ -76,8 +76,8 @@ border-color: #f14e4e !important;
 li:hover ul.dropdown{
     display: block;	/* Display the dropdown */
     position: absolute;
-    top:-60%;
-    left:75%;
+    top:-61%;
+    left:76%;
 }
 
 .dropdown ul li{

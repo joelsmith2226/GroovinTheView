@@ -11,7 +11,7 @@ function setupButtons(){
    nextSong = createDiv('<a><li class="selector-custom song label dropdown">Change Songs<ul class="dropdown"><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Seven nation army\')">Seven Nation Army</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'SynthSaga\')">SynthSaga</a></li><li> <a class="selector-custom song" style="width:100%" onClick="changeSong(\'Lucid dreams\')">Lucid Dreams</a></li></ul></li></a>');
 
    modeSelector.position(windowWidth/30, windowHeight/30 + button.height*3);
-   nextSong.position(windowWidth/30, windowHeight/30 + modeSelector.height*3);
+   nextSong.position(windowWidth/30, windowHeight/30 + button.height*5.5);
 
    // Portfolio link
    link = createA("https://joelsmith2226.github.io", "Back to portfolio");
