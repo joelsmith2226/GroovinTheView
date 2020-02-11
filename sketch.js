@@ -81,7 +81,7 @@ function draw() {
 
    var spectrum = fft.analyze();
 
-   //drawPeakDetection();
+   drawPeakDetection();
 
    if (mode == 'Circular'){
       translate(width/2, height/2);
@@ -127,7 +127,7 @@ function drawPeakDetection(){
    }
    textSize(12);
    fill(255);
-   text(peakTimer, 200, 10);
-   ellipse(200, 40, eW, eW);
+   // text(peakTimer, 200, 10);
+   // ellipse(200, 40, eW, eW);
    noStroke(0);
 }
