@@ -1,6 +1,7 @@
 
 function drawFlat(spectrum){
    colorMode(HSB, bands);
+   var w = width / (bands * 1.5);
    var maxF = Math.max(spectrum);
    for (var i = 0; i < spectrum.length; i++) {
       var amp = spectrum[i];
