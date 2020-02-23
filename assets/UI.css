@@ -32,6 +32,16 @@ background: #9a4ef1;
 border-color: #9a4ef1 !important;
 }
 
+.btn-custom.settings {
+   border-radius: 100%;
+}
+
+.btn-custom.settings:hover{
+background: #4CAF50;
+border-color: 	#4CAF50 !important;
+
+}
+
 .selector-custom.mode:hover {
 background-color:#4e9af1;
 border-color: #4e9af1 !important;

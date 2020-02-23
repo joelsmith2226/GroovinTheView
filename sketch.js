@@ -1,7 +1,7 @@
 // Joel Smith
 // GroovinTheView
 
-/* TODO: - sort out different device displays such as mobile
+/* TODO: - sort out different device displays such as mobile [x]
          - Star speed in response to Music [x]
          - Beat detection
          - Pitch detection
@@ -13,9 +13,13 @@
 */
 // GLOBALS
 var fft, peakDetect, bands;
-var button, modeSelector, nextSong, frequencySlider, ampSlider;
+
+//UI globals
+var playPauseTog, modeSelector, nextSong, link, settingsTogButton;
+var frequencySlider, ampSlider, qualitySlider, smoothSlider, volumeSlider;
 var songs, mode, tempo, peakTimer, peakHistory;
 var rotation, stars;
+var settingsTog = false;
 
 // temp GLOBALS
 var eW = 50;
@@ -40,8 +44,7 @@ function setup() {
    mode = 'Spectrum';
 
    // Spectrum variables
-   bands = 128;
-   fft = new p5.FFT(0.78, bands);
+   setupQuality();
 
    // Transformation variables
    rotation = [0,0,0];
@@ -66,7 +69,12 @@ function setupCanvas(){
    realWidth = windowWidth;
    realHeight = windowHeight;
    angleMode(DEGREES);
-   setupButtons();
+   setupUI();
+}
+
+function setupQuality(){
+   bands = Math.pow(2,qualitySlider.value());
+   fft = new p5.FFT(smoothSlider.value(), bands);
 }
 
 function draw() {
@@ -77,6 +85,10 @@ function draw() {
    if (realWidth != windowWidth || realHeight != windowHeight){
       resetButtons();
       setupCanvas();
+   }
+
+   if (settingsTog){
+      drawSettingsText();
    }
 
    var spectrum = fft.analyze();
@@ -90,18 +102,24 @@ function draw() {
    } else if(mode == 'Spectrum') {
       drawFlat(spectrum);
    } else if (mode == 'Wave'){
-      textFont('Vollkorn');
-      textSize(12);
-      fill(100);
-      let fPos = frequencySlider.position();
-      text('WAVE FREQUENCY', fPos.x + 15, fPos.y - 10);
-      textSize(12);
-      fill(100);
-      let aPos = ampSlider.position();
-      text('WAVE AMPLITUDE', aPos.x + 15, aPos.y - 10);
+      drawWaveText();
       drawNotes(spectrum);
    }
-   drawStars()
+   drawStars();
+}
+
+function displayActiveSliders(){
+   if (settingsTog){
+      showSettingSliders();
+   } else {
+      hideSettingSliders();
+   }
+
+   if (mode == "Wave"){
+      showWaveSliders();
+   } else {
+      hideWaveSliders();
+   }
 }
 
 function updatePeakHistory(){
@@ -130,4 +148,27 @@ function drawPeakDetection(){
    // text(peakTimer, 200, 10);
    // ellipse(200, 40, eW, eW);
    noStroke(0);
+}
+
+function drawWaveText(){
+   textFont('Vollkorn');
+   textSize(12);
+   fill(220);
+   let fPos = frequencySlider.position();
+   text('Frequency', fPos.x + 25, fPos.y - 10);
+   let aPos = ampSlider.position();
+   text('Amplitude', aPos.x + 25, aPos.y - 10);
+}
+
+function drawSettingsText(){
+   textFont('Vollkorn');
+   textSize(12);
+   fill(220);
+   let qPos = qualitySlider.position();
+   console.log(qPos);
+   text('Quality', qPos.x + 15, qPos.y - 10);
+   let sPos = smoothSlider.position();
+   text('Smoothness', sPos.x + 15, sPos.y - 10);
+   let vPos = volumeSlider.position();
+   text('Volume', vPos.x + 15, vPos.y - 10);
 }
