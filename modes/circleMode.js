@@ -1,6 +1,20 @@
+/*
+ * Joel Smith
+ * GroovinTheView
+ * circleMode.js
+ * This file is responsible for the circular visualisation. It takes the FFT of
+ * the input sound and rotates about an origin creating a circular visualisation.
+ * Lower frequencies are the inner ring while outer rings pulse with higher frequencies
+ */
+
 var midRingRadius;
 var highRingRadius;
 
+/*
+ * drawCircle() will take the fft spectrum and rotate the frequency response about
+ * an origin in the centre of the canvas. 3 rings are created (thirds within the
+ * frequency spectrum). Each of the rings have their own animation functions.
+ */
 function drawCircle(spectrum){
    noStroke();
    for (var i = 0; i < spectrum.length; i++) {
@@ -17,6 +31,11 @@ function drawCircle(spectrum){
    }
 }
 
+/*
+ * lowFreqAnimation() creates the inner ring animation for the lowest 3rd of the
+ * frequency spectrum. This inner ring is rotating and flipped horizontally to
+ * create the full circle.
+ */
 function lowFreqAnimation(i, spectrum){
    rotate(rotation[0]);
    var amp = spectrum[i];
@@ -31,6 +50,10 @@ function lowFreqAnimation(i, spectrum){
    rotation[0] += 0.1;
 }
 
+/*
+ * midFreqAnimation() creates the middle ring animation for the middle 3rd of the
+ * frequency spectrum. The middle and outer ring pulse with higher frequencies
+ */
 function midFreqAnimation(i, spectrum){
    //translate(width/2, height/2);
    rotate(rotation[1]);
@@ -47,6 +70,10 @@ function midFreqAnimation(i, spectrum){
    rotation[1] -= 0.1;
 }
 
+/*
+ * highFreqAnimation() creates the high ring animation for the high 3rd of the
+ * frequency spectrum. The middle and outer ring pulse with higher frequencies
+ */
 function highFreqAnimation(i, spectrum){
    //translate(width/2, height/2);
    rotate(rotation[2]);
@@ -64,13 +91,12 @@ function highFreqAnimation(i, spectrum){
    rotation[2] += 0.1;
 }
 
+/*
+ * translateDrawLineReturn() creates a line starting from a distance from the
+ * origin instead of at the origin by translating out at a specific angle.
+ */
 function translateDrawLineReturn(x, y, tx, ty){
    translate(tx, ty);
    line(0,0, x, y);
    translate(-tx, -ty);
-}
-
-
-function translateDrawLineRetur2n(x, y, rad, angle, amp){
-   arc(x, y, rad, rad, angle, angle + amp, OPEN)
 }

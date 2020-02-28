@@ -1,3 +1,15 @@
+/*
+ * Joel Smith
+ * GroovinTheView
+ * UI.js
+ * This file is responsible for all the UI elements within the application
+ * (buttons, sliders, links)
+ */
+
+/*
+ * setupUI() is called in setup() of sketch.js aswell as when a reset is needed
+ * after a display change.
+ */
 function setupUI(){
    setupLinks();
    setupButtons();
@@ -6,6 +18,11 @@ function setupUI(){
    displayActiveSliders();
 }
 
+/*
+ * setupButtons() sets up the play/pause toggle and settings button toggle.
+ * It determines the positioning, css class and functions that are executed
+ * upon mouse press.
+ */
 function setupButtons(){
    playPauseTog = createButton('Play/Pause')
    playPauseTog.mousePressed(toggleSong);
@@ -18,6 +35,10 @@ function setupButtons(){
    settingsTogButton.position(windowWidth-link.width*1.5,windowHeight/30 + 70);
 }
 
+/*
+ * setupSelectors() sets up the change song and change mode selectors. This
+ * required specific html/css class to produce the specific aesthetic required.
+ */
 function setupSelectors(){
    modeSelector= createDiv('<a><li class="selector-custom mode label dropdown">Change Modes<ul class="dropdown"><li><a class="selector-custom mode" style="width:100%" onClick="changeMode(\'Spectrum\')">Spectrum</a></li><li><a class="selector-custom mode" style="width:100%" onClick="changeMode(\'Circular\')">Circular</a></li><li> <a class="selector-custom mode" style="width:100%" onClick="changeMode(\'Wave\')">Wave</a></li></ul></li></a>');
    nextSong = createDiv('<a><li class="selector-custom song label dropdown">Change Songs<ul class="dropdown"><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Hey\')">Hey</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Seven nation army\')">Seven Nation Army</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'SynthSaga\')">SynthSaga</a></li><li> <a class="selector-custom song" style="width:100%" onClick="changeSong(\'Lucid dreams\')">Lucid Dreams</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Daddy, He Got A Tesla\')">Daddy, He Got A Tesla</a></li>');
@@ -25,6 +46,10 @@ function setupSelectors(){
    nextSong.position(windowWidth/30, windowHeight/30 + playPauseTog.height*5.5);
 }
 
+/*
+ * setupLinks() sets up the return to portfolio link in the top right of the
+ * application
+ */
 function setupLinks(){
    // Portfolio link
    link = createA("https://joelsmith2226.github.io", "Back to portfolio");
@@ -32,6 +57,10 @@ function setupLinks(){
    link.position(windowWidth-link.width*2,windowHeight/30);
 }
 
+/*
+ * setupSliders() sets up the wavesliders (frequency, amplitude) and settings
+ * sliders (quality, smoothness, volume).
+ */
 function setupSliders(){
    frequencySlider = createSlider(1, 10, 10, 1);
    frequencySlider.position(windowWidth/30 + 20, windowHeight - 80);
@@ -57,7 +86,10 @@ function setupSliders(){
    drawSettingsText();
 }
 
-// playPauseTog FUNCTIONS //
+/*
+ * toggleSong() is the function called when the play/pause button is pressed.
+ * It will play/pause the current song and reset tempo detection if pause
+ */
 function toggleSong() {
    if (song.isPlaying()){
       song.pause();
@@ -69,16 +101,30 @@ function toggleSong() {
    }
 }
 
+/*
+ * toggleSettings() is the function called when the settings button is pressed.
+ * It will in turn display/hide the corresponding settings sliders.
+ */
 function toggleSettings(){
    settingsTog = !settingsTog;
    displayActiveSliders();
 }
 
+/*
+ * changeMode() is the function called when the new mode is selected. It calls
+ * displayActiveSliders() as changing to/from wave mode will alter which sliders
+ * are displayed.
+ */
 function changeMode(newMode) {
    mode = newMode;
    displayActiveSliders();
 }
 
+/*
+ * changeSong() is the function called when the new song is selected from the song
+ * list. If the currently played song is selected, this will do nothing. It will
+ * also reset the tempo detection.
+ */
 function changeSong(newSong) {
    // Early return if current song playing is selected
    if (song == songs[newSong]){
@@ -100,27 +146,45 @@ function changeSong(newSong) {
    peakHistory = [200];
 }
 
+/*
+ * changeVolume() is the function called when volume slider is altered.
+ */
 function changeVolume(){
    masterVolume(volumeSlider.value(), 0.3);
 }
 
-// SHOW/HIDE SLIDERS
+/*
+ * showWaveSliders() will display the amplitude and frequency sliders in the
+ * bottom left of the application which occurs when in wave mode
+ */
 function showWaveSliders(){
    ampSlider.show();
    frequencySlider.show();
 }
 
+/*
+ * hideWaveSliders() will hide the amplitude and frequency sliders in the
+ * bottom left of the application which occurs when in wave mode
+ */
 function hideWaveSliders(){
    ampSlider.hide();
    frequencySlider.hide();
 }
 
+/*
+ * showSettingSliders() will show the smooth, quality and volume sliders in the
+ * top right of the application which occurs when settings button is toggled.
+ */
 function showSettingSliders(){
    smoothSlider.show();
    qualitySlider.show();
    volumeSlider.show();
 }
 
+/*
+ * hideSettingSliders() will hide the smooth, quality and volume sliders in the
+ * top right of the application which occurs when settings button is toggled.
+ */
 function hideSettingSliders(){
    smoothSlider.hide();
    qualitySlider.hide();
@@ -128,17 +192,23 @@ function hideSettingSliders(){
 }
 
 // RESET UI
-
-function resetButtons(){
+/*
+ * resetUI() will remove the buttons, links, selectors, sliders. This would occur
+ * when a display change has occurred and the UI needs to be relocated, and re-setup.
+ */
+function resetUI(){
    playPauseTog.remove();
    settingsTogButton.remove();
    modeSelector.remove();
    nextSong.remove();
    link.remove();
    removeSliders();
-
 }
 
+/*
+ * removeSliders() will remove the sliders. This would occur when a display
+ * change has occurred and the sliders needs to be relocated, and re-setup.
+ */
 function removeSliders(){
    qualitySlider.remove();
    smoothSlider.remove();
