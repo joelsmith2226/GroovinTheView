@@ -55,6 +55,7 @@ When in **Wave** mode, additional modulators become available in the bottom left
 |<img src="https://github.com/joelsmith2226/GroovinTheView/blob/master/assets/gifs/wave1.gif" width="600" height="280">|
 
 ## Future Features ##
+- Reading sound input from computer sound output
 - Improved tempo detection
 - Particle effects
 - Pitch detection for more interesting visualisations
