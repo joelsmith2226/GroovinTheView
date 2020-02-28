@@ -3,7 +3,7 @@ var AMP;
 
 function drawNotes(spectrum){
    FREQ = frequencySlider.value();
-   AMP = ampSlider.value();
+   AMP = 1 - ampSlider.value();
    let waveform = fft.waveform(1024);
    noFill();
    stroke(255);
@@ -21,7 +21,8 @@ function drawWaveForm(waveform, iter){
    for (var i = 0; i< waveform.length; i++){
       displacement = iter * width/FREQ;
       let x = map(i, 0, waveform.length,displacement, displacement + width/FREQ-1);
-      let y = map(waveform[i], -1, 1, 0, height);
+
+      let y = map(waveform[i], -AMP, AMP, 0, height);
       vertex(x,y);
    }
 }

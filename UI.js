@@ -33,10 +33,10 @@ function setupLinks(){
 }
 
 function setupSliders(){
-   frequencySlider = createSlider(0, 10, 100);
+   frequencySlider = createSlider(1, 10, 10, 1);
    frequencySlider.position(windowWidth/30 + 20, windowHeight - 80);
    frequencySlider.class('cust-slider');
-   ampSlider = createSlider(-50, 10, 100);
+   ampSlider = createSlider(-10, 0.4, 0.1, 0.02);
    ampSlider.position(windowWidth/30 + 20, windowHeight - 30);
    ampSlider.class('cust-slider');
    qualitySlider = createSlider(4, 9, 8, 1);

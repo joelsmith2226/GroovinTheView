@@ -45,7 +45,7 @@ function setup() {
 
    // Instantiate globals
    trackNum = 0;
-   song = songs["SynthSaga"];
+   song = songs["Hey"];
    mode = 'Spectrum';
 
    // Spectrum variables
@@ -133,7 +133,6 @@ function updatePeakHistory(){
       peakHistory.shift();
    }
    tempo = peakHistory.reduce((a, b) => a + b, 0)/peakHistory.length;
-   console.log(peakHistory);
 }
 
 function drawPeakDetection(){
@@ -150,8 +149,6 @@ function drawPeakDetection(){
    }
    textSize(12);
    fill(255);
-   // text(peakTimer, 200, 10);
-   // ellipse(200, 40, eW, eW);
    noStroke(0);
 }
 
@@ -170,7 +167,6 @@ function drawSettingsText(){
    textSize(12);
    fill(220);
    let qPos = qualitySlider.position();
-   console.log(qPos);
    text('Quality', qPos.x + 15, qPos.y - 10);
    let sPos = smoothSlider.position();
    text('Smoothness', sPos.x + 15, sPos.y - 10);
