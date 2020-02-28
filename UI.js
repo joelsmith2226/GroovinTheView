@@ -20,7 +20,7 @@ function setupButtons(){
 
 function setupSelectors(){
    modeSelector= createDiv('<a><li class="selector-custom mode label dropdown">Change Modes<ul class="dropdown"><li><a class="selector-custom mode" style="width:100%" onClick="changeMode(\'Spectrum\')">Spectrum</a></li><li><a class="selector-custom mode" style="width:100%" onClick="changeMode(\'Circular\')">Circular</a></li><li> <a class="selector-custom mode" style="width:100%" onClick="changeMode(\'Wave\')">Wave</a></li></ul></li></a>');
-   nextSong = createDiv('<a><li class="selector-custom song label dropdown">Change Songs<ul class="dropdown"><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Seven nation army\')">Seven Nation Army</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'SynthSaga\')">SynthSaga</a></li><li> <a class="selector-custom song" style="width:100%" onClick="changeSong(\'Lucid dreams\')">Lucid Dreams</a></li></ul></li></a>');
+   nextSong = createDiv('<a><li class="selector-custom song label dropdown">Change Songs<ul class="dropdown"><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Hey\')">Hey</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Seven nation army\')">Seven Nation Army</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'SynthSaga\')">SynthSaga</a></li><li> <a class="selector-custom song" style="width:100%" onClick="changeSong(\'Lucid dreams\')">Lucid Dreams</a></li><li><a class="selector-custom song" style="width:100%" onClick="changeSong(\'Daddy, He Got A Tesla\')">Daddy, He Got A Tesla</a></li>');
    modeSelector.position(windowWidth/30, windowHeight/30 + playPauseTog.height*3);
    nextSong.position(windowWidth/30, windowHeight/30 + playPauseTog.height*5.5);
 }
@@ -85,6 +85,12 @@ function changeSong(newSong) {
       return;
    }
 
+   // if (newSong == "computer"){
+   //    var audioIn = new p5.AudioIn();
+   //    console.log(audioIn.getSources());
+   //    audioIn.start();
+   //    return
+   // }
    song.pause();
    song = songs[newSong];
    song.play();
